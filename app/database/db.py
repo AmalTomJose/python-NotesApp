@@ -1,10 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm  import sessionmaker
+from app.database.config import DATABASE_URL
 
-DATABASE_URL = (
-    "mssql+pyodbc://SA:'MyStrongPassword123!'@localhost:1433/NotesApp"
-    "?driver=ODBC+Driver+17+for+SQL+Server"
-)
 
 
 
