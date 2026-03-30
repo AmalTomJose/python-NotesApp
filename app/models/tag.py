@@ -13,4 +13,4 @@ class Tag(Base):
         "Note",
         secondary=note_tags,
         back_populates="tags"
-    )
+    )       
