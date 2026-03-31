@@ -38,4 +38,15 @@ class NoteOut(BaseModel):
     class Config:
         orm_mode = True
 
+
+class PaginatedNotes(BaseModel):
+    total: int
+    page: int
+    limit: int
+    total_pages: int
+    data: List[NoteOut]
+
+    class Config:
+        orm_mode = True
+
    

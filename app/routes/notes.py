@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File,Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
 import shutil, os
@@ -8,7 +8,7 @@ from app.models.note import Note
 from app.models.tag import Tag
 from app.models.user import User
 from app.models.category import Category
-from app.schemas.note import NoteCreate, NoteOut, NoteUpdate,CategoryOut
+from app.schemas.note import NoteCreate, NoteOut, NoteUpdate,CategoryOut,PaginatedNotes
 from app.auth.dependencies import get_current_user
 
 router = APIRouter(prefix="/notes", tags=["Notes"])
@@ -84,25 +84,41 @@ def create_note(
     )
 
 
-@router.get("/", response_model=List[NoteOut])
+@router.get("/", response_model=PaginatedNotes)
 def get_notes(
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
+    page:int = Query(1,ge=1),
+    limit:int = Query(3,ge=1)
 ):
-    notes = db.query(Note).filter(Note.user_id == current_user.id).all()
+    
+    query = db.query(Note).filter(Note.user_id == current_user.id)
+    total_notes = query.count()
 
-    return [
-        NoteOut(
-            id=n.id,
-            title=n.title,
-            content=n.content,
-            user_id=n.user_id,
-            tags=[tag.name for tag in n.tags],
-            category=n.category.name if n.category else None,
-            file_path=n.file_path
-        )
-        for n in notes
-    ]
+    offset = (page-1)*limit
+
+    notes = query.order_by(Note.id).offset(offset).limit(limit).all()
+    total_pages = (total_notes + limit - 1) // limit
+
+
+    return {
+        "total": total_notes,
+        "page": page,
+        "limit": limit,
+        "total_pages": total_pages,
+        "data": [
+            NoteOut(
+                id=n.id,
+                title=n.title,
+                content=n.content,
+                user_id=n.user_id,
+                tags=[tag.name for tag in n.tags],
+                category=n.category.name if n.category else None,
+                file_path=n.file_path
+            )
+            for n in notes
+        ]
+    }
 
 
 
