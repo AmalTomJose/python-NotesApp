@@ -1,0 +1,144 @@
+2026-03-31 21:44:40,723 - ERROR - Error fetching notes for user_id=2 | page=1 | limit=3
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/routes/notes.py", line 117, in get_notes
+    total_notes = query.count()
+                  ^^^^^
+NameError: name 'query' is not defined. Did you mean: 'Query'?
+2026-03-31 22:12:42,436 - ERROR - [GET /notes/10009999] Error | user_id=2
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/routes/notes.py", line 167, in get_note
+    raise HTTPException(status_code=404, detail="Note not found")
+fastapi.exceptions.HTTPException: 404: Note not found
+2026-03-31 22:33:41,801 - ERROR - [POST /notes] Error creating note | user_id=2
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 835, in _deliver_insertmanyvalues_batches
+    rows = context.fetchall_for_returning(cursor)
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 1780, in fetchall_for_returning
+    return cursor.fetchall()
+           ~~~~~~~~~~~~~~~^^
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Violation of UNIQUE KEY constraint 'UQ__tags__72E12F1B710FB273'. Cannot insert duplicate key in object 'dbo.tags'. The duplicate key value is (water). (2627) (SQLFetch)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/routes/notes.py", line 92, in create_note
+    db.commit()
+    ~~~~~~~~~^^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/persistence.py", line 1143, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1844, in _execute_context
+    return self._exec_insertmany_context(dialect, context)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2040, in _exec_insertmany_context
+    for imv_batch in dialect._deliver_insertmanyvalues_batches(
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<4 lines>...
+        context,
+        ^^^^^^^^
+    ):
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 837, in _deliver_insertmanyvalues_batches
+    connection._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        be,
+        ^^^
+    ...<4 lines>...
+        is_sub_exec=True,
+        ^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 835, in _deliver_insertmanyvalues_batches
+    rows = context.fetchall_for_returning(cursor)
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 1780, in fetchall_for_returning
+    return cursor.fetchall()
+           ~~~~~~~~~~~~~~~^^
+sqlalchemy.exc.IntegrityError: (pyodbc.IntegrityError) ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Violation of UNIQUE KEY constraint 'UQ__tags__72E12F1B710FB273'. Cannot insert duplicate key in object 'dbo.tags'. The duplicate key value is (water). (2627) (SQLFetch)")
+[SQL: INSERT INTO tags (name) OUTPUT inserted.id, inserted.id AS id__1 SELECT p0 FROM (VALUES (?, 0), (?, 1), (?, 2), (?, 3)) AS imp_sen(p0, sen_counter) ORDER BY sen_counter]
+[parameters: ('water', 'drink', 'water', 'water')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-03-31 22:42:03,711 - ERROR - [PUT /notes/2009] Error | user_id=2
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/routes/notes.py", line 234, in update_note
+    tags_input = list(set([t.strip().lower() for t in tags_input if t.strip()]))
+                                                                    ^^^^^^^
+AttributeError: 'Tag' object has no attribute 'strip'
+2026-03-31 22:50:29,480 - ERROR - [DELETE /notes/2009] Error | user_id=2
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/routes/notes.py", line 307, in delete_note
+    raise HTTPException(status_code=404, detail="Note not found")
+fastapi.exceptions.HTTPException: 404: Note not found
