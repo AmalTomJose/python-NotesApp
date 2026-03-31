@@ -1,0 +1,15 @@
+2026-03-31 23:12:17,912 - ERROR - [POST /auth/signup] HTTP error for email=testing@gmail.com
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/auth/auth.py", line 22, in signup
+    raise HTTPException(status_code=400, detail="Email already registered")
+fastapi.exceptions.HTTPException: 400: Email already registered
+2026-03-31 23:13:02,430 - ERROR - [POST /auth/login] HTTP error for email=testingsdfn@gmail.com
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/auth/auth.py", line 46, in login
+    raise HTTPException(status_code=401, detail="Invalid credentials")
+fastapi.exceptions.HTTPException: 401: Invalid credentials
+2026-03-31 23:13:03,411 - ERROR - [POST /auth/login] HTTP error for email=testingsdfn@gmail.com
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/auth/auth.py", line 46, in login
+    raise HTTPException(status_code=401, detail="Invalid credentials")
+fastapi.exceptions.HTTPException: 401: Invalid credentials
