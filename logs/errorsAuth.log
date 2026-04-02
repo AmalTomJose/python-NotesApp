@@ -13,3 +13,8 @@ Traceback (most recent call last):
   File "/Users/amaltomjose/Documents/python-notesApp/app/auth/auth.py", line 46, in login
     raise HTTPException(status_code=401, detail="Invalid credentials")
 fastapi.exceptions.HTTPException: 401: Invalid credentials
+2026-04-02 20:15:48,978 - ERROR - [POST /auth/login] HTTP error for email=testing@gmail.com
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/auth/auth.py", line 46, in login
+    raise HTTPException(status_code=401, detail="Invalid credentials")
+fastapi.exceptions.HTTPException: 401: Invalid credentials

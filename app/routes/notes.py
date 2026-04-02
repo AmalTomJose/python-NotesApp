@@ -3,6 +3,8 @@ from fastapi import APIRouter, Depends, HTTPException, UploadFile, File,Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
 import shutil, os
+from datetime import datetime
+
 
 from app.database.db import get_db
 from app.models.note import Note
@@ -118,17 +120,34 @@ def create_note(
             f"[POST /notes] Error creating note | user_id={current_user.id}"
         )
         raise
+from sqlalchemy import or_
 
 @router.get("/", response_model=PaginatedNotes)
 def get_notes(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
     page: int = Query(1, ge=1),
-    limit: int = Query(3, ge=1)
+    limit: int = Query(3, ge=1),
+    search: Optional[str] = None,
+    dateFilter : Optional[str] = None
 ):
     try:
         query = db.query(Note).filter(Note.user_id == current_user.id)
+
+        if search:
+            search_term = f"%{search}%"
+            query = query.filter(
+                or_(
+                    Note.title.ilike(search_term),
+                    Note.content.ilike(search_term)
+                )
+            )
+        if dateFilter:
+            parsed_date = datetime.strptime(dateFilter, "%Y-%m-%d")
+            query = query.filter(Note.created_at >= parsed_date)
+
         total_notes = query.count()
+
         offset = (page - 1) * limit
 
         notes = query.order_by(Note.id).offset(offset).limit(limit).all()
@@ -136,7 +155,7 @@ def get_notes(
 
         logger.info(
             f"Fetched {len(notes)} notes for user_id={current_user.id} | "
-            f"page={page} | limit={limit}"
+            f"page={page} | limit={limit} | search={search}"
         )
 
         return {
@@ -160,10 +179,10 @@ def get_notes(
 
     except Exception as e:
         logger.exception(
-            f"Error fetching notes for user_id={current_user.id} | page={page} | limit={limit}"
+            f"Error fetching notes for user_id={current_user.id} | page={page} | limit={limit} | search={search}"
         )
         raise e
-
+    
 
 @router.get("/{id}", response_model=NoteOut)
 def get_note(

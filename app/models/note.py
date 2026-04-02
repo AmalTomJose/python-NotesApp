@@ -1,8 +1,10 @@
 
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey,DateTime
 from sqlalchemy.orm import relationship
 from app.database.base import Base
 from app.models.association import note_tags
+from sqlalchemy.sql import func
+
 
 class Note(Base):
     __tablename__ = "notes"
@@ -14,6 +16,8 @@ class Note(Base):
     file_path = Column(String, nullable=True)
 
     user_id = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
 
     
     user = relationship("User", back_populates="notes")

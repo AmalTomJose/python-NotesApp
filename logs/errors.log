@@ -147,3 +147,267 @@ Traceback (most recent call last):
   File "/Users/amaltomjose/Documents/python-notesApp/app/auth/auth.py", line 22, in signup
     raise HTTPException(status_code=400, detail="Email already registered")
 fastapi.exceptions.HTTPException: 400: Email already registered
+2026-04-01 19:18:10,044 - ERROR - Error fetching notes for user_id=1 | page=1 | limit=3
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/routes/notes.py", line 131, in get_notes
+    total_notes = query.count()
+                  ^^^^^^^^^^^
+AttributeError: 'FakeDB' object has no attribute 'count'
+2026-04-01 19:22:40,362 - ERROR - Error fetching notes for user_id=1 | page=1 | limit=3
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/routes/notes.py", line 134, in get_notes
+    notes = query.order_by(Note.id).offset(offset).limit(limit).all()
+            ^^^^^^^^^^^^^^
+AttributeError: 'FakeDB' object has no attribute 'order_by'
+2026-04-01 19:55:27,039 - ERROR - Error fetching notes for user_id=1 | page=1 | limit=3
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/routes/notes.py", line 134, in get_notes
+    notes = query.order_by(Note.id).offset(offset).limit(limit).all()
+            ^^^^^^^^^^^^^^
+AttributeError: 'FakeDB' object has no attribute 'order_by'
+2026-04-01 19:56:09,021 - ERROR - Error fetching notes for user_id=1 | page=1 | limit=3
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/routes/notes.py", line 134, in get_notes
+    notes = query.order_by(Note.id).offset(offset).limit(limit).all()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'FakeDB' object has no attribute 'offset'
+2026-04-02 20:13:25,176 - ERROR - Error fetching notes for user_id=2 | page=1 | limit=3 | search=None
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/routes/notes.py", line 147, in get_notes
+    query = query.filter(Note.created_at >= parsed_date)
+                         ^^^^^^^^^^^^^^^
+AttributeError: type object 'Note' has no attribute 'created_at'
+2026-04-02 20:13:26,652 - ERROR - Error fetching notes for user_id=2 | page=1 | limit=3 | search=None
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/routes/notes.py", line 147, in get_notes
+    query = query.filter(Note.created_at >= parsed_date)
+                         ^^^^^^^^^^^^^^^
+AttributeError: type object 'Note' has no attribute 'created_at'
+2026-04-02 20:16:30,741 - ERROR - Error fetching notes for user_id=2 | page=1 | limit=3 | search=None
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'created_at'. (207) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/routes/notes.py", line 149, in get_notes
+    total_notes = query.count()
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/query.py", line 3146, in count
+    self._legacy_from_self(col).enable_eagerloads(False).scalar()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/query.py", line 2835, in scalar
+    ret = self.one()
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/query.py", line 2808, in one
+    return self._iter().one()  # type: ignore
+           ~~~~~~~~~~^^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2249, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<4 lines>...
+        conn,
+        ^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+        statement, params or {}, execution_options=execution_options
+    )
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'created_at'. (207) (SQLExecDirectW)")
+[SQL: SELECT count(*) AS count_1 
+FROM (SELECT notes.id AS notes_id, notes.title AS notes_title, notes.content AS notes_content, notes.category_id AS notes_category_id, notes.file_path AS notes_file_path, notes.user_id AS notes_user_id, notes.created_at AS notes_created_at 
+FROM notes 
+WHERE notes.user_id = ? AND notes.created_at >= ?) AS anon_1]
+[parameters: (2, datetime.datetime(2026, 4, 1, 0, 0))]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-04-02 20:16:32,349 - ERROR - Error fetching notes for user_id=2 | page=1 | limit=3 | search=None
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'created_at'. (207) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/amaltomjose/Documents/python-notesApp/app/routes/notes.py", line 149, in get_notes
+    total_notes = query.count()
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/query.py", line 3146, in count
+    self._legacy_from_self(col).enable_eagerloads(False).scalar()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/query.py", line 2835, in scalar
+    ret = self.one()
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/query.py", line 2808, in one
+    return self._iter().one()  # type: ignore
+           ~~~~~~~~~~^^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2249, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<4 lines>...
+        conn,
+        ^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+        statement, params or {}, execution_options=execution_options
+    )
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/amaltomjose/Documents/python-notesApp/venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'created_at'. (207) (SQLExecDirectW)")
+[SQL: SELECT count(*) AS count_1 
+FROM (SELECT notes.id AS notes_id, notes.title AS notes_title, notes.content AS notes_content, notes.category_id AS notes_category_id, notes.file_path AS notes_file_path, notes.user_id AS notes_user_id, notes.created_at AS notes_created_at 
+FROM notes 
+WHERE notes.user_id = ? AND notes.created_at >= ?) AS anon_1]
+[parameters: (2, datetime.datetime(2026, 4, 1, 0, 0))]
+(Background on this error at: https://sqlalche.me/e/20/f405)
