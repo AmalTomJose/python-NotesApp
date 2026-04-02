@@ -114,7 +114,7 @@ def get_notes(
     dateFilter : Optional[str] = None
 ):
     try:
-        query = db.query(Note).filter(Note.user_id == current_user.id)
+        query = db.query(Note).filter(Note.user_id == current_user.id, Note.is_trash == False)
 
         if search:
             search_term = f"%{search}%"
@@ -307,21 +307,15 @@ def delete_note(
         if not note:
             raise HTTPException(status_code=404, detail="Note not found")
 
-        db.delete(note)
+        note.is_trash = True
         db.commit()
-
-       
 
         return {"message": "Note deleted successfully"}
 
     except HTTPException:
-        logger.exception(
-            f"[DELETE /notes/{id}] Error | user_id={current_user.id}"
-        )   
+        logger.exception(f"[DELETE /notes/{id}] HTTPException | user_id={current_user.id}")
         raise
 
     except Exception:
-        logger.exception(
-            f"[DELETE /notes/{id}] Error | user_id={current_user.id}"
-        )
+        logger.exception(f"[DELETE /notes/{id}] Exception | user_id={current_user.id}")
         raise
