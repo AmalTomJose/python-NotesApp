@@ -1,5 +1,5 @@
 
-from sqlalchemy import Column, Integer, String, ForeignKey,DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey,DateTime,Boolean
 from sqlalchemy.orm import relationship
 from app.database.base import Base
 from app.models.association import note_tags
@@ -27,3 +27,4 @@ class Note(Base):
         back_populates="notes"
     )
     category = relationship("Category", back_populates="notes")
+    favourites = relationship("Favourite", backref="note")

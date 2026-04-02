@@ -10,3 +10,4 @@ class User(Base):
     password = Column(String(255), nullable=False)
 
     notes = relationship("Note", back_populates="user", cascade="all, delete")
+    favourites = relationship("Favourite", backref="user")

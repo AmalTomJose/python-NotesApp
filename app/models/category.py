@@ -10,4 +10,8 @@ class Category(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), unique=True, index=True)
 
+
+    class Config:
+        orm_mode = True
+
     notes = relationship("Note", back_populates="category")
