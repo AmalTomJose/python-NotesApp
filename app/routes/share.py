@@ -10,7 +10,7 @@ from app.auth.dependencies import get_current_user
 
 router = APIRouter(prefix="/share", tags=["Share"])
 
-
+ 
 @router.post("/")
 def share_note(
     note_id: int,
@@ -104,3 +104,47 @@ def get_notes_i_shared(
         })
 
     return result
+
+
+@router.get("/shared-users/{note_id}")
+def get_users_shared_for_note(
+    note_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    note = db.query(Note).filter(
+        Note.id == note_id,
+        Note.user_id == current_user.id 
+    ).first()
+
+    if not note:
+        raise HTTPException(
+            status_code=403,
+            detail="You can only view sharing details of your own notes"
+        )
+
+   
+    shared_entries = db.query(SharedNote).filter(
+        SharedNote.note_id == note_id,
+        SharedNote.owner_id == current_user.id
+    ).all()
+
+    result = []
+
+    for shared in shared_entries:
+        user = db.query(User).filter(
+            User.id == shared.shared_with_id
+        ).first()
+
+        if not user:
+            continue
+
+        result.append({
+            "user_id": user.id,
+            "username": user.email,
+        })
+
+    return {
+        "note_id": note_id,
+        "shared_with": result
+    }
