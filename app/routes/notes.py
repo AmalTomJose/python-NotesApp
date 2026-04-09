@@ -111,7 +111,11 @@ def get_notes(
     page: int = Query(1, ge=1),
     limit: int = Query(3, ge=1),
     search: Optional[str] = None,
-    dateFilter : Optional[str] = None
+    dateFilter : Optional[str] = None,
+    category_id : Optional[int] = None,
+    favourite: Optional[bool] = False,
+    sort_by:  str = "created_at",
+    order : Optional[str] = "asc"
 ):
     try:
         query = db.query(Note).filter(Note.user_id == current_user.id, Note.is_trash == False)
@@ -128,11 +132,23 @@ def get_notes(
             parsed_date = datetime.strptime(dateFilter, "%Y-%m-%d")
             query = query.filter(Note.created_at >= parsed_date)
 
+        if category_id:
+            query = query.filter(Note.category_id == category_id)
+        
+        if favourite:
+            query = query.join(Note.favourites).filter_by(user_id=current_user.id)
+
+        if order and order.lower() =="desc":
+            query = query.order_by(Note.created_at.desc())
+        else:
+            query = query.order_by(Note.created_at.asc())        
+
+
         total_notes = query.count()
 
         offset = (page - 1) * limit
 
-        notes = query.order_by(Note.id).offset(offset).limit(limit).all()
+        notes = query.offset(offset).limit(limit).all()
         total_pages = (total_notes + limit - 1) // limit
 
         logger.info(
