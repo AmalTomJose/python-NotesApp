@@ -87,7 +87,8 @@ def create_note(
             user_id=db_note.user_id,
             tags=[tag.name for tag in db_note.tags],
             category=category.name if category else None,
-            file_path=db_note.file_path
+            file_path=db_note.file_path,
+
         )
 
     except HTTPException:
@@ -114,7 +115,6 @@ def get_notes(
     dateFilter : Optional[str] = None,
     category_id : Optional[int] = None,
     favourite: Optional[bool] = False,
-    sort_by:  str = "created_at",
     order : Optional[str] = "asc"
 ):
     try:

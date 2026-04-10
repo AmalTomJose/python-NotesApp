@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 from typing import List, Optional
+from datetime import datetime
+
 
 class NoteBase(BaseModel):
     title: str
@@ -32,7 +34,6 @@ class NoteOut(BaseModel):
     user_id: int
     tags: List[str] = []
     category: Optional[str] = None
-
     file_path: Optional[str] =  None
 
     class Config:
